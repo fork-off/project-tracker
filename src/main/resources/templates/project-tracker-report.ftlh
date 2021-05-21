@@ -72,7 +72,7 @@
                                     <#assign totalCost += projectTracker.cost>
                                     <tr>
                                         <td>${projectTracker.projectName}</td>
-                                        <td>#{projectTracker.cost}</td>
+                                        <td class="text-right">#{projectTracker.cost}</td>
                                         <td>${projectTracker.spatial}</td>
                                         <td>${projectTracker.temporal}</td>
                                         <td>${projectTracker.type}</td>
