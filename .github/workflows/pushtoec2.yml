@@ -14,17 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Upload to EC2 instance
-        uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.TRACKER_EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.TRACKER_EC2_HOSTNAME }}
-          REMOTE_USER: ${{ secrets.TRACKER_EC2_USERNAME }}
-          REMOTE_PORT: 22
-          SOURCE: "./"
-          TARGET: "/home/ubuntu/test"
-      
-      - name: Restart Service
+      - name: Deploy to Tracker EC2 Instance
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.TRACKER_EC2_HOSTNAME }}       
@@ -32,5 +22,7 @@ jobs:
           key: ${{ secrets.TRACKER_EC2_SSH_KEY }}
           port: 22
           script: |
-            cd ${HOME}/test && \
-            ls -ltr
+            cd ${HOME}/project-tracker && \
+            ./gradlew --stop && \
+            git pull --rebase && \
+            nohup ./gradlew clean bootRun &
