@@ -1,0 +1,36 @@
+name: Push-to-EC2
+
+on:
+  push:
+    branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Push to EC2 Instance
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Upload to EC2 instance
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.TRACKER_EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.TRACKER_EC2_HOSTNAME }}
+          REMOTE_USER: ${{ secrets.TRACKER_EC2_USERNAME }}
+          REMOTE_PORT: 22
+          SOURCE: "./"
+          TARGET: "/home/ubuntu/test"
+      
+      - name: Restart Service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TRACKER_EC2_HOSTNAME }}       
+          username: ${{ secrets.TRACKER_EC2_USERNAME }}     
+          key: ${{ secrets.TRACKER_EC2_SSH_KEY }}
+          port: 22
+          script: |
+            cd ${HOME}/test && \
+            ls -ltr
