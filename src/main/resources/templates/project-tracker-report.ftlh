@@ -84,11 +84,10 @@
                                     </tr>
                                 </#list>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td/>
-                                        <td>#{totalCost}</td>
-                                        <td colspan="4"/>
+                                <tfoot >
+                                   <tr>
+                                        <th class="font-weight-bold" style="white-space: nowrap; text-align:right">Total:</th>
+                                        <th class="font-weight-bold" style="white-space: nowrap;" colspan="5"></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -105,24 +104,47 @@
 </div>
 <script src="/js/main.js"></script>
 <script>
-
-    $(document).ready(function () {
-        var table = $('#reports').DataTable({
-            lengthChange: false,
-            responsive: true,
-            dom: 'frtipB',
-            buttons: [
-                { extend: 'copyHtml5', footer: true },
-                { extend: 'excelHtml5', footer: true },
-                { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true }
-            ]
-        });
-
-        table.buttons().container()
-            .appendTo('#reports_wrapper .col-md-6:eq(0)');
-    });
-
+$(document).ready(function() {        
+    var table = $('#reports').DataTable( {
+        lengthChange: false,
+        responsive: true,
+        buttons: [ 'copy', 'excel', 'csv', 'pdf' ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // Total over all pages
+            total = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+            // Total over this page
+            pageTotal = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+            // Update footer
+            $( api.column( 1 ).footer() ).html(
+                '₹'+pageTotal +' ( ₹ '+ total +' total)'
+            );
+        }
+    } );
+    table.buttons().container()
+        .appendTo( '#reports_wrapper .col-md-6:eq(0)' );
+} );
 </script>
 </body>
 </html>
