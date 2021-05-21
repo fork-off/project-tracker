@@ -16,14 +16,13 @@ jobs:
 
       - name: Deploy to Tracker EC2 Instance
         uses: appleboy/ssh-action@master
-        env:
-            JAVA_HOME: /usr/share/jdk1.8.0_291
         with:
           host: ${{ secrets.TRACKER_EC2_HOSTNAME }}       
           username: ${{ secrets.TRACKER_EC2_USERNAME }}     
           key: ${{ secrets.TRACKER_EC2_SSH_KEY }}
           port: 22
           script: |
+            source ${HOME}/.bashrc && \
             cd ${HOME}/project-tracker && \
             ./gradlew --stop && \
             git pull --rebase && \
