@@ -29,7 +29,7 @@
                                         class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/report/project-tracker">Reports </a>
+                            <a class="nav-link" href="/report/project-tracker">Show Projects </a>
                         </li>
                     </ul>
                 </div>
