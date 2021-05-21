@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Deploy to Tracker EC2 Instance
-        uses: appleboy/ssh-action@@v0.1.4
+        uses: appleboy/ssh-action@v0.1.4
         env:
           JAVA_HOME: "/usr/share/jdk1.8.0_291"
         with:
