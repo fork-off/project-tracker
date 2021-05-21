@@ -1,5 +1,5 @@
 package org.mapunity.projecttracker.entity.enums;
 
 public enum Type {
-    COMPREHENSION, PREVENTION, CARE, CURE, RESILIENCE
+    Comprehension, Prevention, Care, Cure, Resilience
 }

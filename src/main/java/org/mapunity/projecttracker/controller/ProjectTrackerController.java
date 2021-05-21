@@ -25,7 +25,7 @@ public class ProjectTrackerController {
 
     @GetMapping("/")
     public String index() {
-        return "redirect:/project-tracker";
+        return "redirect:/report/project-tracker";
     }
 
     @GetMapping("/project-tracker")

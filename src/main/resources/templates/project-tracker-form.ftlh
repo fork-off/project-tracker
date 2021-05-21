@@ -8,58 +8,59 @@
 <body>
 <h1>Project Tracker Info</h1>
 <#if projectTracker?? >
-    Funder: ${projectTracker.funder}<br>
     Cost: ${projectTracker.cost}<br>
-    Project Name: ${projectTracker.project.name}<br>
+    Project Name: ${projectTracker.projectName}<br>
     Spatial: ${projectTracker.spatial}<br>
     Temporal: ${projectTracker.temporal}<br>
     Type: ${projectTracker.type}<br>
+ 
+<form action="/project-tracker">
+<table>
+ <tfoot>
+            <tr>
+                <td><input type="submit"   value="Add Project"/></td>
+                 
+            </tr>
+            </tfoot>
+           </table>
+          </form> 
+    
 <#else>
     <form action="/project-tracker" method="post">
         <table>
-            <tr>
-                <td>Funder:</td>
-                <td><input type="text" name="funder" required="required"/></td>
-            </tr>
-            <tr>
+           <tr>
                 <td>Project Name:</td>
-                <td>
-                    <select name="project" required="required">
-                        <option value="" disabled selected>Select Project</option>
-                        <#list projects as project>
-                            <option value="${project.id}">${project.name}</option>
-                        </#list>
-                    </select>
-                </td>
+                   <td><input type="text" maxLength="128" name="projectName" width="40" required="required"/></td>
+                
             </tr>
             <tr>
-                <td>Cost:</td>
-                <td><input type="text" name="cost" required="required"/></td>
+                <td>Cost In Rs:</td>
+                <td><input type="text" name="cost" pattern="\d+(\.\d{1,2})?" required="required"/></td>
             </tr>
             <tr>
                 <td>Spatial:</td>
                 <td>
-                    <input type="radio" name="spatial" value="STRENGTH" checked="checked"/>STRENGTH
-                    <input type="radio" name="spatial" value="NEED"/>NEED
-                    <input type="radio" name="spatial" value="OPPORTUNITY"/>OPPORTUNITY
+                    <input type="radio" name="spatial" value="Strength" checked="checked"/>Strength
+                    <input type="radio" name="spatial" value="Need"/>Need
+                    <input type="radio" name="spatial" value="Opportunity"/>Opportunity
                 </td>
             </tr>
             <tr>
                 <td>Temporal:</td>
                 <td>
-                    <input type="radio" name="temporal" value="IMMEDIATE" checked="checked"/>IMMEDIATE
-                    <input type="radio" name="temporal" value="MEDIUM"/>MEDIUM
-                    <input type="radio" name="temporal" value="LONG"/>LONG
+                    <input type="radio" name="temporal" value="Immediate" checked="checked"/>Immediate
+                    <input type="radio" name="temporal" value="Medium"/>Medium
+                    <input type="radio" name="temporal" value="Long"/>Long
                 </td>
             </tr>
             <tr>
                 <td>Type:</td>
                 <td>
-                    <input type="radio" name="type" value="COMPREHENSION" checked="checked"/>COMPREHENSION
-                    <input type="radio" name="type" value="PREVENTION"/>PREVENTION
-                    <input type="radio" name="type" value="CARE"/>CARE
-                    <input type="radio" name="type" value="CURE"/>CURE
-                    <input type="radio" name="type" value="RESILIENCE"/>RESILIENCE
+                    <input type="radio" name="type" value="Comprehension" checked="checked"/>Comprehension
+                    <input type="radio" name="type" value="Prevention"/>Prevention
+                    <input type="radio" name="type" value="Care"/>Care
+                    <input type="radio" name="type" value="Cure"/>Cure
+                    <input type="radio" name="type" value="Resilience"/>Resilience
                 </td>
             </tr>
             <tfoot>

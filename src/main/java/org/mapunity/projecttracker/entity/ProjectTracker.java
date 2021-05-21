@@ -23,16 +23,12 @@ public class ProjectTracker extends AbstractEntity {
     @SequenceGenerator(name = PROJECT_INFO_SEQ, sequenceName = PROJECT_INFO_SEQ, allocationSize = 1)
     private Long id;
 
-    @NotBlank
-    private String funder;
-
-    @ManyToOne
     @NotNull
-    private Project project;
+    private String projectName;
 
     //TODO This should be part of project?
     @NotNull
-    private Long cost;
+    private Double cost;
 
     @Enumerated
     @NotNull
