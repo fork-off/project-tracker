@@ -9,7 +9,6 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -41,9 +40,10 @@
                         <h3 class="text-center">
                             Add New Project
                         </h3>
+                        <hr/>
                         <#if projectTracker?? >
                             <div class="alert alert-success">
-                                <h4>Successfully added !</h4>
+                                <h4>Project successfully created !</h4>
                             </div>
                             <table class="table table-bordered">
                                 <tbody>

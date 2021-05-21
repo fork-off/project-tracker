@@ -23,8 +23,6 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 </head>
 <body>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -108,7 +106,7 @@ $(document).ready(function() {
     var table = $('#reports').DataTable( {
         lengthChange: false,
         responsive: true,
-        buttons: [ 'copy', 'excel', 'csv', 'pdf' ],
+        buttons: [ 'copy', 'excel', 'csv', 'pdf', 'print' ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
