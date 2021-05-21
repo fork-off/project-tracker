@@ -41,7 +41,7 @@
                 <div class="col-md-12 mx-auto">
                     <div class="bg-white rounded-lg shadow-sm p-5">
                         <h3 class="text-center">
-                            Project Tracker Info
+                            Edit Project
                         </h3>
                         <#if projectTracker?? >
                             <div class="alert alert-success">
@@ -193,7 +193,7 @@
                                     </fieldset>
                                 </div>
                                 <br/>
-                                <input type="submit" class="btn btn-primary btn-block shadow-sm" value="Submit"/>
+                                <input type="submit" class="btn btn-primary btn-block shadow-sm" value="Save"/>
                                 <input type="reset" class="btn btn-danger btn-block shadow-sm" value="Reset"/>
                             </form>
 
