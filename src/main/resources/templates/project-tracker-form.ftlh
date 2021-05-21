@@ -14,10 +14,10 @@
     <div class="row">
         <div class="col-md-12">
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark static-top">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseOne">
                     <span class="navbar-toggler-icon"></span>
                 </button> <a class="navbar-brand" href="/">Project Tracker</a>
-                <div class="collapse navbar-collapse">
+                <div id="collapseOne" class="collapse navbar-collapse">
                     <ul class="navbar-nav">
                         <!--<li class="nav-item active">
                             <a class="nav-link" href="/project">Add Project <span class="sr-only">(current)</span></a>
@@ -38,6 +38,7 @@
                         <h3 class="text-center">
                             Project Tracker Info
                         </h3>
+                        <hr />
 <#if projectTracker?? > 
     <div class="alert alert-success">
             <h4>Successfully added !</h4>
