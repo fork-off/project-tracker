@@ -69,10 +69,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <#assign totalCost = 0>
                                 <#list projectTrackers as projectTracker>
+                                    <#assign totalCost += projectTracker.cost>
                                     <tr>
                                         <td>${projectTracker.projectName}</td>
-                                        <td>${projectTracker.cost}</td>
+                                        <td>#{projectTracker.cost}</td>
                                         <td>${projectTracker.spatial}</td>
                                         <td>${projectTracker.temporal}</td>
                                         <td>${projectTracker.type}</td>
@@ -82,6 +84,13 @@
                                     </tr>
                                 </#list>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td/>
+                                        <td>#{totalCost}</td>
+                                        <td colspan="4"/>
+                                    </tr>
+                                </tfoot>
                             </table>
                         <#else>
                             <div class="alert alert-info">
@@ -100,7 +109,14 @@
     $(document).ready(function () {
         var table = $('#reports').DataTable({
             lengthChange: false,
-            buttons: ['excel', 'pdf', 'colvis']
+            responsive: true,
+            dom: 'frtipB',
+            buttons: [
+                { extend: 'copyHtml5', footer: true },
+                { extend: 'excelHtml5', footer: true },
+                { extend: 'csvHtml5', footer: true },
+                { extend: 'pdfHtml5', footer: true }
+            ]
         });
 
         table.buttons().container()
