@@ -23,4 +23,4 @@ jobs:
           port: 22
           script: |
             cd ${HOME}/project-tracker && \
-            bash ./start.sh
+            nohup ./start.sh &
