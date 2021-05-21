@@ -67,9 +67,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <#assign totalCost = 0>
                                 <#list projectTrackers as projectTracker>
-                                    <#assign totalCost += projectTracker.cost>
                                     <tr>
                                         <td>${projectTracker.projectName}</td>
                                         <td class="text-right">#{projectTracker.cost}</td>
@@ -83,11 +81,12 @@
                                 </#list>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <td/>
-                                        <td class="text-right">#{totalCost}</td>
-                                        <td colspan="4"/>
-                                    </tr>
+                                <tr>
+                                    <th class="font-weight-bold" style="white-space: nowrap; text-align:right">Total ₹:
+                                    </th>
+                                    <th class="font-weight-bold" style="white-space: nowrap;"></th>
+                                    <th colspan="4"></th>
+                                </tr>
                                 </tfoot>
                             </table>
                         <#else>
@@ -103,25 +102,98 @@
 </div>
 <script src="/js/main.js"></script>
 <script>
-
     $(document).ready(function () {
         var table = $('#reports').DataTable({
             lengthChange: false,
             responsive: true,
-            dom: 'frtipB',
             buttons: [
-                { extend: 'excelHtml5', footer: true },
-                { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true },
-                { extend: 'copyHtml5', footer: true },
-                { extend: 'print', footer: true }
-            ]
-        });
+                {
+                    extend: 'excelHtml5',
+                    footer: true,
+                    exportOptions: {
+                        modifier: {
+                            order: 'applied', // 'current', 'applied','index', 'original'
+                            page: 'all', // 'all', 'current'
+                            search: 'applied' // 'none', 'applied', 'removed'
+                        },
+                        columns: [0, 1, 2, 3, 4]
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    footer: true,
+                    exportOptions: {
+                        modifier: {
+                            order: 'applied', // 'current', 'applied','index', 'original'
+                            page: 'all', // 'all', 'current'
+                            search: 'applied' // 'none', 'applied', 'removed'
+                        },
+                        columns: [0, 1, 2, 3, 4]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    footer: true,
+                    exportOptions: {
+                        modifier: {
+                            order: 'applied', // 'current', 'applied','index', 'original'
+                            page: 'all', // 'all', 'current'
+                            search: 'applied' // 'none', 'applied', 'removed'
+                        },
+                        columns: [0, 1, 2, 3, 4]
+                    }
+                },
+                {
+                    extend: 'copyHtml5',
+                    footer: true,
+                    exportOptions: {
+                        modifier: {
+                            order: 'applied', // 'current', 'applied','index', 'original'
+                            page: 'all', // 'all', 'current'
+                            search: 'applied' // 'none', 'applied', 'removed'
+                        }
+                    },
+                    columns: [0, 1, 2, 3, 4]
+                },
+                {
+                    extend: 'print',
+                    footer: true,
+                    exportOptions: {
+                        modifier: {
+                            order: 'applied', // 'current', 'applied','index', 'original'
+                            page: 'all', // 'all', 'current'
+                            search: 'applied' // 'none', 'applied', 'removed'
+                        }
+                    }
+                }
+            ],
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+                // Total over all pages
+                total = api
+                    .column(1)
+                    .data()
+                    .reduce(function (a, b) {
+                        return parseFloat(a) + parseFloat(b);
+                    }, 0);
 
+                // Total over this page
+                pageTotal = api
+                    .column(1, {page: 'current'})
+                    .data()
+                    .reduce(function (a, b) {
+                        return parseFloat(a) + parseFloat(b);
+                    }, 0);
+
+                // Update footer
+                $(api.column(1).footer()).html(
+                    pageTotal + ' (Grand Total ' + total + ')'
+                );
+            }
+        });
         table.buttons().container()
             .appendTo('#reports_wrapper .col-md-6:eq(0)');
     });
-
 </script>
 </body>
 </html>
