@@ -26,7 +26,6 @@ public class ProjectTracker extends AbstractEntity {
     @NotNull
     private String projectName;
 
-    //TODO This should be part of project?
     @NotNull
     private Double cost;
 

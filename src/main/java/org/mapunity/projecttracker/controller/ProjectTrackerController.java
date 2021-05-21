@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -15,11 +16,9 @@ import javax.validation.Valid;
 public class ProjectTrackerController {
 
     private final ProjectTrackerRepository projectTrackerRepository;
-    private final ProjectRepository projectRepository;
 
-    public ProjectTrackerController(ProjectTrackerRepository projectTrackerRepository, ProjectRepository projectRepository) {
+    public ProjectTrackerController(ProjectTrackerRepository projectTrackerRepository) {
         this.projectTrackerRepository = projectTrackerRepository;
-        this.projectRepository = projectRepository;
     }
 
 
@@ -30,7 +29,6 @@ public class ProjectTrackerController {
 
     @GetMapping("/project-tracker")
     public String getProjectTracker(Model model) {
-        model.addAttribute("projects", projectRepository.findAll());
         return "project-tracker-form";
     }
 
@@ -40,6 +38,20 @@ public class ProjectTrackerController {
             projectTracker = projectTrackerRepository.save(projectTracker);
         model.addAttribute("projectTracker", projectTracker);
         return "project-tracker-form";
+    }
+
+    @GetMapping("/project-tracker/{id}")
+    public String showProjectTracker(@PathVariable Long id, Model model) {
+        model.addAttribute("project", projectTrackerRepository.findById(id).get());
+        return "project-tracker-edit-form";
+    }
+
+    @PostMapping("/project-tracker/{id}")
+    public String updateProjectTracker(@Valid ProjectTracker projectTracker, BindingResult bindingResult, Model model) {
+        if (!bindingResult.hasErrors())
+            projectTracker = projectTrackerRepository.save(projectTracker);
+        model.addAttribute("projectTracker", projectTracker);
+        return "project-tracker-edit-form";
     }
 
     @GetMapping("/report/project-tracker")
