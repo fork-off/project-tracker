@@ -22,8 +22,5 @@ jobs:
           key: ${{ secrets.TRACKER_EC2_SSH_KEY }}
           port: 22
           script: |
-            source ${HOME}/.bashrc && \
             cd ${HOME}/project-tracker && \
-            ./gradlew --stop && \
-            git pull --rebase && \
-            nohup ./gradlew clean bootRun &
+            bash ./start.sh
