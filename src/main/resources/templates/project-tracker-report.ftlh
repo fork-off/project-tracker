@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <title>Project Tracker</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap4.min.css">
     <link href="/css/main.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 </head>
 <body>
 
@@ -39,27 +53,17 @@
                         <h3 class="text-center">
                             Project Tracker Reports
                         </h3>
+                        <hr />
 <#if projectTrackers?? >
-    <table class="table table-bordered">
+    <table id="reports" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>
-                    Project
-                </th>
-                <th>
-                    Cost
-                </th>
-                <th>
-                    Spatial
-                </th>
-                <th>
-                    Temporal
-                </th>
-                <th>
-                    Type
-                </th>
-                <th>
-                </th>
+                <th>Project</th>
+                <th>Cost</th>
+                <th>Spatial</th>
+                <th>Temporal</th>
+                <th>Type</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +74,7 @@
                 <td>${projectTracker.spatial}</td>
                 <td>${projectTracker.temporal}</td>
                 <td>${projectTracker.type}</td>
-                <td><input type="button" onClick="redirectTo(${projectTracker.id})" value="Edit Project"/></td>
+                <td><input type="button" id="editForm" onClick="redirectTo(${projectTracker.id})" value="Edit Project"/></td>
             </tr>
         </#list>
         </tbody>
@@ -88,13 +92,16 @@
 </div>
 <script src="/js/main.js"></script>
 <script>
-function  redirectTo(id)
-{
-form=document.getElementById("editForm");
-form.action="/project-tracker?id="+id;
-form.submit();
 
-}
+$(document).ready(function() {
+    var table = $('#reports').DataTable( {
+        lengthChange: false,
+        buttons: [ 'excel', 'pdf', 'colvis' ]
+    } );
+ 
+    table.buttons().container()
+        .appendTo( '#reports_wrapper .col-md-6:eq(0)' );
+} );
 
 </script>
 </body>
