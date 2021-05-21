@@ -16,6 +16,8 @@ jobs:
 
       - name: Deploy to Tracker EC2 Instance
         uses: appleboy/ssh-action@master
+        env:
+            JAVA_HOME: /usr/share/jdk1.8.0_291
         with:
           host: ${{ secrets.TRACKER_EC2_HOSTNAME }}       
           username: ${{ secrets.TRACKER_EC2_USERNAME }}     
