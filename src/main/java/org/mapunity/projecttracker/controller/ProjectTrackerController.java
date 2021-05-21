@@ -60,8 +60,8 @@ public class ProjectTrackerController {
             projectTracker = Optional.of(projectTrackerRepository
                     .save(new JMapper<>(ProjectTracker.class, ProjectTrackerDTO.class)
                             .getDestination(projectTracker.get(), projectTrackerDto)));
+            model.addAttribute("projectTracker", projectTracker.get());
         }
-        model.addAttribute("projectTracker", projectTracker.get());
         return "project-tracker-edit-form";
     }
 

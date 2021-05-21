@@ -23,8 +23,6 @@
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 </head>
 <body>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -112,10 +110,11 @@
             responsive: true,
             dom: 'frtipB',
             buttons: [
-                { extend: 'copyHtml5', footer: true },
                 { extend: 'excelHtml5', footer: true },
                 { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true }
+                { extend: 'pdfHtml5', footer: true },
+                { extend: 'copyHtml5', footer: true },
+                { extend: 'print', footer: true }
             ]
         });
 
