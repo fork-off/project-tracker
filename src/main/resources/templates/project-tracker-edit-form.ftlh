@@ -14,34 +14,37 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark  fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a href="#" class="navbar-brand">
+        <img src="/images/icon.png" height="28" alt=""> Project Tracker
+    </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/project-tracker">Add Project<span
+                            class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project-tracker/report">Show Projects </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project-tracker/report/summary">Summary </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark static-top">
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="/">Project Tracker</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/project-tracker">Add Project<span
-                                        class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/project-tracker/report">Show Projects </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/project-tracker/report/summary">Summary </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
             <div class="row">
                 <div class="col-md-12 mx-auto">
                     <div class="bg-white rounded-lg shadow-sm p-5">
+                        <hr/>
                         <h3 class="text-center">
                             Edit Project
                         </h3>
@@ -108,7 +111,8 @@
                                     <label class="h6" for="cost">
                                         Cost In ₹
                                     </label>
-                                    <input type="number" class="form-control" name="cost" required="required" value="#{project.cost}"/>
+                                    <input type="number" class="form-control" name="cost" required="required"
+                                           value="#{project.cost}"/>
                                 </div>
                                 <div class="form-group mx-auto">
                                     <fieldset class="border p-2">
@@ -205,9 +209,9 @@
                             </form>
 
                             <script>
-                                document.getElementById('${project.spatial}').checked= true;
-                                document.getElementById('${project.temporal}').checked= true;
-                                document.getElementById('${project.type}').checked= true;
+                                document.getElementById('${project.spatial}').checked = true;
+                                document.getElementById('${project.temporal}').checked = true;
+                                document.getElementById('${project.type}').checked = true;
                             </script>
                         </#if>
                     </div>

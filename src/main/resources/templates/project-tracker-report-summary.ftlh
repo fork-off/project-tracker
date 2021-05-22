@@ -15,36 +15,39 @@
     <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark  fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseOne">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a href="#" class="navbar-brand">
+        <img src="/images/icon.png" height="28" alt=""> Project Tracker
+    </a>
+    <div id="collapseOne" class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <!--<li class="nav-item active">
+                <a class="nav-link" href="/project">Add Project <span class="sr-only">(current)</span></a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="/project-tracker">Add Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project-tracker/report">Show Projects</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/project-tracker/report/summary">Summary<span
+                            class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark static-top">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseOne">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="#">Project Tracker</a>
-                <div id="collapseOne" class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
-                        <!--<li class="nav-item active">
-                            <a class="nav-link" href="/project">Add Project <span class="sr-only">(current)</span></a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="/project-tracker">Add Project</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/project-tracker/report">Show Projects</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/project-tracker/report/summary">Summary<span
-                                        class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
             <div class="row" id="summary">
                 <div class="col-md-12 mx-auto">
                     <div class="bg-white rounded-lg shadow-sm p-5">
+                        <hr/>
                         <h3 class="text-center">
                             Summary Report
                         </h3>
@@ -173,7 +176,7 @@
                             <br/>
                             <div class="container bg-light" id="pbuttons">
                                 <div class="col-md-12 text-center" id="buttons">
-                                    <input type="button" id="pdf" onclick="generatePDF()" value="PDF"
+                                    <input type="button" id="pdf" onclick="generatePDF()" value="Export to PDF"
                                            class="btn btn-primary shadow-sm mr-3"/>
                                 </div>
                             </div>
@@ -207,7 +210,9 @@
         html2pdf()
             .from(document.getElementById('summary'))
             .save("summary_report_" + (new Date().toUTCString().replaceAll(/[^A-Z0-9]/ig, '_')));
-        setTimeout(function () {document.getElementById("pbuttons").appendChild(buttons);}, 100);
+        setTimeout(function () {
+            document.getElementById("pbuttons").appendChild(buttons);
+        }, 100);
     }
 </script>
 </body>
