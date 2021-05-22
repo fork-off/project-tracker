@@ -30,7 +30,10 @@
                                         class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/report/project-tracker">Show Projects </a>
+                            <a class="nav-link" href="/project-tracker/report">Show Projects </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/project-tracker/report/summary">Summary </a>
                         </li>
                     </ul>
                 </div>
@@ -193,8 +196,12 @@
                                     </fieldset>
                                 </div>
                                 <br/>
-                                <input type="submit" class="btn btn-primary btn-block shadow-sm" value="Save"/>
-                                <input type="reset" class="btn btn-danger btn-block shadow-sm" value="Reset"/>
+                                <div class="container bg-light">
+                                    <div class="col-md-12 text-center">
+                                        <input type="submit" class="btn btn-primary shadow-sm mr-3" value="Save"/>
+                                        <input type="reset" class="btn btn-danger shadow-sm" value="Reset"/>
+                                    </div>
+                                </div>
                             </form>
 
                             <script>

@@ -40,8 +40,11 @@
                             <a class="nav-link" href="/project-tracker">Add Project</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/report/project-tracker">Show Projects<span
+                            <a class="nav-link" href="/project-tracker/report">Show Projects <span
                                         class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/project-tracker/report/summary">Summary </a>
                         </li>
                     </ul>
                 </div>

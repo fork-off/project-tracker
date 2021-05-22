@@ -3,21 +3,22 @@ package org.mapunity.projecttracker.controller;
 import com.googlecode.jmapper.JMapper;
 import org.mapunity.projecttracker.entity.ProjectTracker;
 import org.mapunity.projecttracker.entity.contracts.ProjectTrackerDTO;
-import org.mapunity.projecttracker.repository.ProjectRepository;
+import org.mapunity.projecttracker.entity.contracts.Summary;
 import org.mapunity.projecttracker.repository.ProjectTrackerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("project-tracker")
 public class ProjectTrackerController {
 
     private final ProjectTrackerRepository projectTrackerRepository;
@@ -26,18 +27,12 @@ public class ProjectTrackerController {
         this.projectTrackerRepository = projectTrackerRepository;
     }
 
-
-    @GetMapping("/")
-    public String index() {
-        return "redirect:/report/project-tracker";
-    }
-
-    @GetMapping("/project-tracker")
+    @GetMapping
     public String getProjectTracker(Model model) {
         return "project-tracker-form";
     }
 
-    @PostMapping("/project-tracker")
+    @PostMapping
     public String saveProjectTracker(@Valid ProjectTracker projectTracker, BindingResult bindingResult, Model model) {
         if (!bindingResult.hasErrors())
             projectTracker = projectTrackerRepository.save(projectTracker);
@@ -45,13 +40,13 @@ public class ProjectTrackerController {
         return "project-tracker-form";
     }
 
-    @GetMapping("/project-tracker/{id}")
+    @GetMapping("{id}")
     public String showProjectTracker(@PathVariable Long id, Model model) {
         model.addAttribute("project", projectTrackerRepository.findById(id).get());
         return "project-tracker-edit-form";
     }
 
-    @PostMapping("/project-tracker/{id}")
+    @PostMapping("{id}")
     public String updateProjectTracker(@ModelAttribute @Valid ProjectTrackerDTO projectTrackerDto,
                                        @PathVariable Long id,
                                        BindingResult bindingResult, Model model) {
@@ -65,9 +60,30 @@ public class ProjectTrackerController {
         return "project-tracker-edit-form";
     }
 
-    @GetMapping("/report/project-tracker")
+    @GetMapping("report")
     public String projectTrackerReport(Model model) {
         model.addAttribute("projectTrackers", projectTrackerRepository.findAll());
         return "project-tracker-report";
+    }
+
+    @GetMapping("report/summary")
+    public String projectTrackerSummaryReport(Model model) {
+        List<ProjectTracker> projectTrackers = projectTrackerRepository.findAll();
+        if (!projectTrackers.isEmpty()) {
+            model.addAttribute("hasData", true);
+            Map<String, Summary> spatialData = projectTrackers.stream()
+                    .collect(Collectors.groupingBy(proj -> proj.getSpatial().name(),
+                            Collector.of(Summary::new, Summary::add, Summary::merge)));
+            Map<String, Summary> typeData = projectTrackers.stream()
+                    .collect(Collectors.groupingBy(proj -> proj.getType().name(),
+                            Collector.of(Summary::new, Summary::add, Summary::merge)));
+            Map<String, Summary> temporalData = projectTrackers.stream()
+                    .collect(Collectors.groupingBy(proj -> proj.getTemporal().name(),
+                            Collector.of(Summary::new, Summary::add, Summary::merge)));
+            model.addAttribute("spatialData", spatialData);
+            model.addAttribute("typeData", typeData);
+            model.addAttribute("temporalData", temporalData);
+        }
+        return "project-tracker-report-summary";
     }
 }
