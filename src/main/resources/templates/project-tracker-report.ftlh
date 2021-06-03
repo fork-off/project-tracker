@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -27,7 +29,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark  fixed-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapseOne">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,18 +38,14 @@
     </a>
     <div id="collapseOne" class="collapse navbar-collapse">
         <ul class="navbar-nav">
-            <!--<li class="nav-item active">
-                <a class="nav-link" href="/project">Add Project <span class="sr-only">(current)</span></a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="/project-tracker">Add Project</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/project-tracker/report">Show Projects <span
-                            class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/project-tracker/report">Show Projects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/project-tracker/report/summary">Summary </a>
+                <a class="nav-link" href="/project-tracker/report/summary">Summary</a>
             </li>
         </ul>
     </div>
@@ -81,8 +79,11 @@
                                 <td>${projectTracker.spatial}</td>
                                 <td>${projectTracker.temporal}</td>
                                 <td>${projectTracker.type}</td>
-                                <td><a href="/project-tracker/${projectTracker.id}"><input type="button"
-                                                                                           value="Edit"/></a>
+                                <td style="white-space: nowrap; text-align:center">
+                                    <a href="/project-tracker/edit/${projectTracker.id}"
+                                       class="btn btn-success btn-sm rounded-0"><i class="fa fa-edit"></i></a>
+                                    <a href="/project-tracker/delete/${projectTracker.id}"
+                                       class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         </#list>
@@ -105,7 +106,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <script src="/js/main.js"></script>
 <script>

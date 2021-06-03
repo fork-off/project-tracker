@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,36 +29,42 @@ public class ProjectTrackerController {
     }
 
     @GetMapping
-    public String getProjectTracker(Model model) {
+    public String getProjectTracker() {
         return "project-tracker-form";
     }
 
     @PostMapping
-    public String saveProjectTracker(@Valid ProjectTracker projectTracker, BindingResult bindingResult, Model model) {
+    public String saveProjectTracker(@Valid ProjectTracker projectTracker, BindingResult bindingResult, RedirectAttributes ra) {
         if (!bindingResult.hasErrors())
             projectTracker = projectTrackerRepository.save(projectTracker);
-        model.addAttribute("projectTracker", projectTracker);
-        return "project-tracker-form";
+        ra.addFlashAttribute("projectTracker", projectTracker);
+        return "redirect:/project-tracker";
     }
 
-    @GetMapping("{id}")
-    public String showProjectTracker(@PathVariable Long id, Model model) {
-        model.addAttribute("project", projectTrackerRepository.findById(id).get());
+    @GetMapping("edit/{id}")
+    public String showProjectTracker(@PathVariable Long id, Model model, @RequestParam Optional<Boolean> saved) {
+        ProjectTracker projectTracker = projectTrackerRepository.findById(id).get();
+        model.addAttribute(saved.isPresent() ? "projectTracker" : "project", projectTracker);
         return "project-tracker-edit-form";
     }
 
-    @PostMapping("{id}")
+    @PostMapping("edit/{id}")
     public String updateProjectTracker(@ModelAttribute @Valid ProjectTrackerDTO projectTrackerDto,
                                        @PathVariable Long id,
-                                       BindingResult bindingResult, Model model) {
+                                       BindingResult bindingResult, RedirectAttributes attributes) {
         Optional<ProjectTracker> projectTracker = projectTrackerRepository.findById(id);
         if (!bindingResult.hasErrors() && projectTracker.isPresent()) {
             projectTracker = Optional.of(projectTrackerRepository
                     .save(new JMapper<>(ProjectTracker.class, ProjectTrackerDTO.class)
                             .getDestination(projectTracker.get(), projectTrackerDto)));
-            model.addAttribute("projectTracker", projectTracker.get());
         }
-        return "project-tracker-edit-form";
+        return "redirect:/project-tracker/edit/" + id + "?saved=true";
+    }
+
+    @GetMapping("delete/{id}")
+    public String updateProjectTracker(@PathVariable Long id, Model model) {
+        projectTrackerRepository.delete(projectTrackerRepository.findById(id).get());
+        return "redirect:/project-tracker/report";
     }
 
     @GetMapping("report")

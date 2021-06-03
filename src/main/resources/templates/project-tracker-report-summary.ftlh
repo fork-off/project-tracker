@@ -25,9 +25,6 @@
     </a>
     <div id="collapseOne" class="collapse navbar-collapse">
         <ul class="navbar-nav">
-            <!--<li class="nav-item active">
-                <a class="nav-link" href="/project">Add Project <span class="sr-only">(current)</span></a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="/project-tracker">Add Project</a>
             </li>
@@ -35,8 +32,7 @@
                 <a class="nav-link" href="/project-tracker/report">Show Projects</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/project-tracker/report/summary">Summary<span
-                            class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/project-tracker/report/summary">Summary</a>
             </li>
         </ul>
     </div>
