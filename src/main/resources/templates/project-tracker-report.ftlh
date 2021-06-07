@@ -61,7 +61,7 @@
                 <hr/>
                 <#if projectTrackers?? >
                     <table id="reports" class="table table-striped table-bordered" width="100%">
-                        <thead>
+                        <thead class="thead-dark">
                         <tr>
                             <th>Project</th>
                             <th>Cost</th>
@@ -75,14 +75,14 @@
                         <#list projectTrackers as projectTracker>
                             <tr>
                                 <td>${projectTracker.projectName}</td>
-                                <td class="text-right">#{projectTracker.cost}</td>
+                                <td class="text-right">${projectTracker.cost}</td>
                                 <td>${projectTracker.spatial}</td>
                                 <td>${projectTracker.temporal}</td>
                                 <td>${projectTracker.type}</td>
                                 <td style="white-space: nowrap; text-align:center">
-                                    <a href="/project-tracker/edit/${projectTracker.id}"
-                                       class="btn btn-success btn-sm rounded-0"><i class="fa fa-edit"></i></a>
-                                    <a href="/project-tracker/delete/${projectTracker.id}"
+                                    <a href="/project-tracker/edit/#{projectTracker.id}"
+                                       class="btn btn-success btn-sm rounded-0 mr-3"><i class="fa fa-edit"></i></a>
+                                    <a href="/project-tracker/delete/#{projectTracker.id}"
                                        class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -179,12 +179,19 @@
             ],
             "footerCallback": function (row, data, start, end, display) {
                 var api = this.api(), data;
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
                 // Total over all pages
                 total = api
                     .column(1)
                     .data()
                     .reduce(function (a, b) {
-                        return parseFloat(a) + parseFloat(b);
+                        return intVal(a) + intVal(b);
                     }, 0);
 
                 // Total over this page
@@ -192,12 +199,13 @@
                     .column(1, {page: 'current'})
                     .data()
                     .reduce(function (a, b) {
-                        return parseFloat(a) + parseFloat(b);
+                        return intVal(a) + intVal(b);
                     }, 0);
 
+                formatter = new Intl.NumberFormat();
                 // Update footer
                 $(api.column(1).footer()).html(
-                    pageTotal + ' (Grand Total ' + total + ')'
+                    formatter.format(pageTotal) + ' (Grand Total ' + formatter.format(total) + ')'
                 );
             }
         });
